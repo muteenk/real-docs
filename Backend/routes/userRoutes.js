@@ -1,5 +1,5 @@
-import express from 'express'
-import { 
+const express = require("express");
+const { 
     registerUser, 
     loginUser, 
     logoutUser, 
@@ -10,25 +10,21 @@ import {
     updateUserProfile,
     getAllUsers,
     getOneUser
-} from "../controllers/userController.js";
-import { isUserAuthenticated, authorizeRoles } from "../middleware/auth.js";
+} = require("../controllers/userController");
+const { isUserAuthenticated, authorizeRoles } = require("../middleware/auth");
 
-const userRouter = new express.Router();
+const router = new express.Router();
 
 // User Authentication Routes
-userRouter.route("/register").post(registerUser);
-userRouter.route("/login").post(loginUser);
-userRouter.route("/logout").get(logoutUser);
-userRouter.route("/password/forgot").post(forgotPassword);
-userRouter.route("/password/reset/:token").put(resetPassword)
+router.route("/register").post(registerUser);
+router.route("/login").post(loginUser);
+router.route("/logout").get(logoutUser);
 
 // User CRUD
-userRouter.route("/me").get(isUserAuthenticated, getUserDetails)
-userRouter.route("/password/update").put(isUserAuthenticated, updateUserPassword)
-userRouter.route("/me/update").put(isUserAuthenticated, updateUserProfile)
+router.route("/me").get(isUserAuthenticated, getUserDetails)
 
 // Admin CRUD
-userRouter.route("/admin/users").get(isUserAuthenticated, authorizeRoles("admin"), getAllUsers);
-userRouter.route("/admin/user/:id").get(isUserAuthenticated, authorizeRoles("admin"), getOneUser);
+router.route("/admin/users").get(isUserAuthenticated, getAllUsers);
+router.route("/admin/user/:id").get(isUserAuthenticated, getOneUser);
 
-export default userRouter;
+module.exports = router;

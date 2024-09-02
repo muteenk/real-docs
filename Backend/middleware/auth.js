@@ -1,11 +1,11 @@
-import ErrorHandler from "../utils/errorHandler.js";
-import catchAsyncErrors from "./catchAsyncErrors.js";
-import jwt from "jsonwebtoken";
+const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncErrors = require("./catchAsyncErrors");
+const jwt = require("jsonwebtoken");
 
 // Model Imports
-import User from "../models/userModel.js";
+const User = require("../models/userModel");
 
-export const isUserAuthenticated = catchAsyncErrors( async (req, res, next) => {
+exports.isUserAuthenticated = catchAsyncErrors( async (req, res, next) => {
 
     const {token} = req.cookies;
 
@@ -22,7 +22,7 @@ export const isUserAuthenticated = catchAsyncErrors( async (req, res, next) => {
 }) 
 
 
-export const authorizeRoles = (...roles) => {
+exports.authorizeRoles = (...roles) => {
 
     return (req, res, next) => {
 
