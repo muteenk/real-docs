@@ -23,24 +23,6 @@ const userSchema = new mongoose.Schema({
         min: [8, "Please provide a password of atleast 8 Characters"],
         select: false
     },
-    dob: {
-        type: Date,
-        required: [true, "Please provide your Date of Birth"],
-    },
-    primaryCurrency: {
-        type: String,
-        required: [true, "Please select your primary currency"],
-    },
-    ocupation: {
-        type: String,
-        required: [true, "Please enter your ocupation"],
-    },
-    role: {
-        type: String,
-        default: "user"
-    },
-
-    
     resetPasswordToken: String,
     resetPasswordExpire: Date
 
