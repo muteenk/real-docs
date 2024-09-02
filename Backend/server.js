@@ -1,14 +1,16 @@
 const app = require("./app");
 const dotenv = require("dotenv");
 dotenv.config({path: __dirname+"/config/config.env"});
+const {Server} = require("socket.io")
+const http = require("http");
+
+
+
+const server = http.createServer(app);
+const io = new Server(server);
 const connectDatabase = require("./config/db");
 
-// Handle Uncaught Exceptions
-process.on("uncaughtException", err => {
-    console.log(`Error: ${err.message}`);
-    console.log("Shutting down the server due to Uncaught Exception");
-    process.exit(1);
-})
+
 
 
 const port = process.env.PORT || 8000;
@@ -18,8 +20,31 @@ const port = process.env.PORT || 8000;
 connectDatabase();
 
 
-const server = app.listen(port, () => {
+// Socket
+
+io.on("connection", (socket) => {
+    console.log("New Connection -> "+socket.id);
+    socket.on("disconnect", () => {
+        console.log("User Disconnected");
+    })
+
+    socket.on("message", (msg) => {
+        socket.broadcast.emit("message", msg);
+    })
+})
+
+
+
+const serverHandler = server.listen(port, () => {
     console.log(`server started at http://127.0.0.1:${port}`);
+})
+
+
+// Handle Uncaught Exceptions
+process.on("uncaughtException", err => {
+    console.log(`Error: ${err.message}`);
+    console.log("Shutting down the server due to Uncaught Exception");
+    process.exit(1);
 })
 
 
@@ -27,7 +52,7 @@ const server = app.listen(port, () => {
 process.on("unhandledRejection", err => {
     console.log(`Error: ${err.message}`);
     console.log("Shutting down the server due to Unhandled Promise Rejection");
-    server.close(() => {
+    serverHandler.close(() => {
         process.exit(1);
     });
 })
