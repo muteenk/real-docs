@@ -3,13 +3,18 @@ const dotenv = require("dotenv");
 dotenv.config({path: __dirname+"/config/config.env"});
 const {Server} = require("socket.io")
 const http = require("http");
+const cors = require("cors");
 
 
 
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        credentials: true,
+    }
+});
 const connectDatabase = require("./config/db");
-
 
 
 
@@ -17,19 +22,21 @@ const port = process.env.PORT || 8000;
 
 
 // Connect to database
-connectDatabase();
+//connectDatabase();
 
 
 // Socket
 
 io.on("connection", (socket) => {
     console.log("New Connection -> "+socket.id);
+    socket.emit("welcome", "Welcome to the server");
+    
     socket.on("disconnect", () => {
-        console.log("User Disconnected");
+        console.log("User Disconnected -> "+socket.id);
     })
 
-    socket.on("message", (msg) => {
-        socket.broadcast.emit("message", msg);
+    socket.on("req", (msg) => {
+        socket.broadcast.emit("res", msg);
     })
 })
 

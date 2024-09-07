@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 /backend/config/config.env
 Todo.txt
+.env
+*.env
+*/.env
+*/*.env
