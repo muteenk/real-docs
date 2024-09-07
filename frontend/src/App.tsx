@@ -40,12 +40,10 @@ function App() {
         Real Docs
       </h1>
       <div>
-        <button className="bg-[gray] px-4 py-2 font-bold" onClick={() => {
-          console.log(docText);
-          ws.emit("req", docText);
-        }
-        }>Update</button>
-        <textarea className="block w-[70%] h-[100vh] mx-auto my-[3em] border-2 border-sky-700 outline-none" value={docText} onChange={(e) => {
+          Status: {ws ? <span className="text-[green] font-bold">Online</span> : <span className="text-[red] font-bold">Offline</span>}
+      </div>
+      <div>
+        <textarea className="block w-[95%] h-[100vh] mx-auto my-[3em] border-2 border-sky-700 outline-none" value={docText} onChange={(e) => {
           onTyping(e);
         }} ></textarea>
       </div>
