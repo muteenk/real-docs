@@ -1,14 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect, useMemo } from 'react'
+import { io } from 'socket.io-client'
+ 
 function App() {
-  const [count, setCount] = useState(0)
+  const [docText, setDocText] = useState("")
+  const [ws, setWs] = useState<WebSocket | null>(null);
+
+  useEffect(() => {
+
+    const socket = io("http://localhost:4000", {
+        withCredentials: true,
+      });
+
+    socket.on("connect", () => {
+      setWs(socket);
+      console.log("connected", socket.id);
+    });
+
+    socket.on("res", (docText: string) => {
+      setDocText(docText);
+    });
+
+    socket.on("welcome", (s) => {
+      console.log(s);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const onTyping = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDocText(e.target.value)
+    ws.emit("req", e.target.value)
+  }
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
+      <h1 className="text-3xl font-bold">
+        Real Docs
       </h1>
+      <div>
+        <button className="bg-[gray] px-4 py-2 font-bold" onClick={() => {
+          console.log(docText);
+          ws.emit("req", docText);
+        }
+        }>Update</button>
+        <textarea className="block w-[70%] h-[100vh] mx-auto my-[3em] border-2 border-sky-700 outline-none" value={docText} onChange={(e) => {
+          onTyping(e);
+        }} ></textarea>
+      </div>
     </>
   )
 }
