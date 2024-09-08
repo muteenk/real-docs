@@ -31,3 +31,7 @@ Todo.txt
 */package-lock.json
 */yarn.lock
 */pnpm-lock.yaml
+*/dist
+*/dist/
+/dist/
+dist
