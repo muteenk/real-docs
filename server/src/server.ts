@@ -16,29 +16,15 @@ const io = new Server(server, {
 
 
 import connectDatabase from '../config/database.js';
-
+import socketHandler from './socket/socket.js';
 
 
 // Config
 const port = process.env.PORT || 5000;
 //connectDatabase();
 
-
-
 // Socket Connection
-io.on("connection", (socket) => {
-    console.log("New Connection -> "+socket.id);
-    socket.emit("welcome", "Welcome to the server");
-    
-    socket.on("disconnect", () => {
-        console.log("User Disconnected -> "+socket.id);
-    })
-
-    socket.on("req", (msg) => {
-        socket.broadcast.emit("res", msg);
-    })
-})
-
+io.on("connection", socketHandler);
 
 
 const serverHandler = server.listen(port, () => {
