@@ -1,32 +1,13 @@
 import { useState, useEffect, useMemo } from 'react'
 import { io } from 'socket.io-client'
+import SocketHandler from './socket/Socket.ts'
  
 function App() {
   const [docText, setDocText] = useState("")
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-
-    const socket = io("http://localhost:4000", {
-        withCredentials: true,
-      });
-
-    socket.on("connect", () => {
-      setWs(socket);
-      console.log("connected", socket.id);
-    });
-
-    socket.on("res", (docText: string) => {
-      setDocText(docText);
-    });
-
-    socket.on("welcome", (s) => {
-      console.log(s);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
+    SocketHandler(setWs, setDocText);
   }, []);
 
   const onTyping = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
