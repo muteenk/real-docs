@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
 
-export const DocContext = createContext(null);
+export const DocContext = createContext();
 
 
 export const DocProvider = ({children}: any) => {

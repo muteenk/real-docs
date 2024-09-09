@@ -1,6 +1,6 @@
 import {createContext, useContext, useState} from 'react';
 
-export const SocketContext = createContext(null);
+export const SocketContext = createContext();
 
 export const SocketProvider = ({children}: any) => {
 

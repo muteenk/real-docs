@@ -1,12 +1,15 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { io } from 'socket.io-client'
 
+import { SocketContext } from './context/SocketContext.tsx'
+import { DocContext } from './context/DocContext.tsx'
 import Router from './pages/Router.tsx'
 import SocketHandler from './socket/Socket.ts'
  
 function App() {
-  const [docText, setDocText] = useState("")
-  const [ws, setWs] = useState<WebSocket | null>(null);
+
+  const { ws, setWs } = useContext(SocketContext);
+  const { docText, setDocText } = useContext(DocContext);
 
   useEffect(() => {
     SocketHandler(setWs, setDocText);
@@ -15,7 +18,7 @@ function App() {
   
   return (
     <>
-      <Router ws={ws} setWs={ws} docText={docText} setDocText={setDocText} />
+      <Router />
     </>
   )
 }

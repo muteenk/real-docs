@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-
-import Home from "./Home/Home.tsx"
+import Home from "./Home/Home.tsx";
 
 
 interface RouterProps {
@@ -10,11 +9,11 @@ interface RouterProps {
   setDocText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Router = ({ws, setWs, docText, setDocText}: RouterProps) => {
+const Router = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Home ws={ws} setWs={setWs} docText={docText} setDocText={setDocText} />} />
+      <Route path="/" element={<Home />} />
       <Route path="*" element={<Home/>} />
     </Routes>
   )

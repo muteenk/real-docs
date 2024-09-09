@@ -1,4 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import {SocketContext} from '../../context/SocketContext.tsx'
+import {DocContext} from '../../context/DocContext.tsx'
+
 
 interface HomeProps {
   ws: WebSocket | null;
@@ -7,7 +10,10 @@ interface HomeProps {
   setDocText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Home = ({ws, setWs, docText, setDocText}: HomeProps) => {
+const Home = () => {
+
+  const {ws} = useContext(SocketContext);
+  const {docText, setDocText} = useContext(DocContext);
 
   const onTyping = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDocText(e.target.value)
