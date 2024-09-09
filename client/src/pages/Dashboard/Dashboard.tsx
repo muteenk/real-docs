@@ -21,8 +21,8 @@ const Dashboard = () => {
       <div>
           Status: {ws ? <span className="text-[green] font-bold">Online</span> : <span className="text-[red] font-bold">Offline</span>}
       </div>
-      <div>
-        <textarea className="block w-[95%] h-[100vh] mx-auto my-[3em] shadow-[-3px_3px_40px_1px_rgb(0,0,0,0.4)] px-10 py-10 rounded-md outline-none resize-none" value={docText} onChange={(e) => {
+      <div className="bg-background">
+        <textarea className="bg-surface block w-[90%] sm:w-[80%] md:w-[80%] lg:w-[50%] aspect-[9/16] mx-auto my-[3em] border-[0.5px] border-gray-400 px-10 py-10 outline-none resize-none" value={docText} onChange={(e) => {
           onTyping(e);
         }} ></textarea>
       </div>
