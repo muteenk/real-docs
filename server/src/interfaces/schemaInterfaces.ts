@@ -13,6 +13,14 @@ export interface IUser extends Document {
     resetPasswordTokenGenerator: () => string;
 }
 
+export interface IDoc extends Document {
+  title: string;
+  description: string;
+  content: string;
+  createdAt: Date;
+  lastModified: Date | null;
+}
+
 export interface IUserAuthRequest extends Request {
     user: string // or any other type
   }
