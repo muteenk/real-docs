@@ -3,7 +3,7 @@ import {SocketContext} from '../../context/SocketContext.tsx'
 import {DocContext} from '../../context/DocContext.tsx'
 
 
-const Home = () => {
+const Dashboard = () => {
 
   const {ws} = useContext(SocketContext);
   const {docText, setDocText} = useContext(DocContext);
@@ -30,4 +30,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Dashboard
