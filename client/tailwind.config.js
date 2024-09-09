@@ -10,6 +10,7 @@ export default {
       "background": "#f9fbfd",
       "surface": "#ffffff",
       "border-pri": "#a2a4a3",
+      "primary": "#2684fc",
     }
   },
   plugins: [],
