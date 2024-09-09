@@ -3,13 +3,6 @@ import {SocketContext} from '../../context/SocketContext.tsx'
 import {DocContext} from '../../context/DocContext.tsx'
 
 
-interface HomeProps {
-  ws: WebSocket | null;
-  setWs: React.Dispatch<React.SetStateAction<WebSocket | null>>;
-  docText: string;
-  setDocText: React.Dispatch<React.SetStateAction<string>>;
-}
-
 const Home = () => {
 
   const {ws} = useContext(SocketContext);
